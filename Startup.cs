@@ -29,6 +29,8 @@ namespace BurgerShack
         {
             services.AddSingleton<FakeDb>();
             services.AddTransient<BurgersService>();
+            services.AddTransient<SidesService>();
+            services.AddTransient<DrinksService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
