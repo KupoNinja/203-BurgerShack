@@ -8,7 +8,19 @@ namespace BurgerShack.Services
 {
     public class DrinksService
     {
-        private readonly FakeDb _repo;
+        private readonly FakeDb _fakeRepo;
+        private readonly DrinksRepository _repo;
+
+        public List<Drink> GetDrinks()
+        {
+            return _repo.GetAll().ToList();
+        }
+
+        public Drink GetDrinkById(string id)
+        {
+            var drink = _repo.GetDrinkById(id);
+            return drink;
+        }
 
         public Drink AddDrink(Drink drinkData)
         {
@@ -40,21 +52,9 @@ namespace BurgerShack.Services
             return drink;
         }
 
-        public List<Drink> GetDrinks()
+        public DrinksService(FakeDb fakeRepo, IDbConnection repo)
         {
-            if (_repo.Drinks.Count < 1) { throw new Exception("There are no drinks"); }
-            return _repo.Drinks;
-        }
-
-        public Drink GetDrinkById(string id)
-        {
-            var drink = _repo.Drinks.Find(b => b.Id == id);
-            if (drink == null) { throw new Exception("I DONT LIKE BAD ID's"); }
-            return drink;
-        }
-
-        public DrinksService(FakeDb repo)
-        {
+            _fakeRepo = fakeRepo;
             _repo = repo;
         }
     }
