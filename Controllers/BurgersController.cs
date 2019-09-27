@@ -52,7 +52,7 @@ namespace BurgerShack.Controllers
             {
                 burgerData.Id = id;
                 var burger = _bs.EditBurger(burgerData);
-                return Ok(burger);
+                return Accepted(burger);
             }
             catch (Exception e) { return BadRequest(e.Message); }
         }
@@ -64,7 +64,7 @@ namespace BurgerShack.Controllers
             try
             {
                 var burger = _bs.DeleteBurger(id);
-                return Ok(burger);
+                return Accepted(burger);
             }
             catch (Exception e)
             {

@@ -8,75 +8,75 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BurgerShack.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class OrdersController : ControllerBase
-  {
-    private readonly OrdersService _os;
-
-    // GET api/values
-    [HttpGet]
-    public ActionResult<IEnumerable<Order>> Get()
+    [Route("api/[controller]")]
+    [ApiController]
+    public class OrdersController : ControllerBase
     {
-      return _os.GetOrders();
-    }
+        private readonly OrdersService _os;
 
-    // GET api/values/5
-    [HttpGet("{id}")]
-    public ActionResult<Order> Get(string id)
-    {
-      try
-      {
-        Order order = _os.GetOrderById(id);
-        return Ok(order);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
+        // GET api/values
+        [HttpGet]
+        public ActionResult<IEnumerable<Order>> Get()
+        {
+            return _os.GetOrders();
+        }
 
-    // POST api/values
-    [HttpPost]
-    public ActionResult<Order> Post([FromBody] Order orderData)
-    {
-      try
-      {
-        Order myOrder = _os.AddOrder(orderData);
-        return Created("api/orders/" + myOrder.Id, myOrder);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message); //code snippet
-      }
-    }
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public ActionResult<Order> Get(string id)
+        {
+            try
+            {
+                Order order = _os.GetOrderById(id);
+                return Ok(order);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
-    // PUT api/values/5
-    [HttpPut("{id}/fulfill")]
-    public ActionResult<Order> Put(string id)
-    {
-      try
-      {
-        var order = _os.FulfillOrder(id);
-        return Ok(order);
-      }
-      catch (Exception e) { return BadRequest(e.Message); }
-    }
+        // POST api/values
+        [HttpPost]
+        public ActionResult<Order> Post([FromBody] Order orderData)
+        {
+            try
+            {
+                Order myOrder = _os.AddOrder(orderData);
+                return Created("api/orders/" + myOrder.Id, myOrder);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message); //code snippet
+            }
+        }
 
-    [HttpPut("{id}/cancel")]
-    public ActionResult<Order> CancelOrder(string id)
-    {
-      try
-      {
-        Order order = _os.CancelOrder(id);
-        return Ok(order);
-      }
-      catch (Exception e) { return BadRequest(e.Message); }
-    }
+        // PUT api/values/5
+        [HttpPut("{id}/fulfill")]
+        public ActionResult<Order> Put(string id)
+        {
+            try
+            {
+                var order = _os.FulfillOrder(id);
+                return Accepted(order);
+            }
+            catch (Exception e) { return BadRequest(e.Message); }
+        }
 
-    public OrdersController(OrdersService os)
-    {
-      _os = os;
+        [HttpPut("{id}/cancel")]
+        public ActionResult<Order> CancelOrder(string id)
+        {
+            try
+            {
+                Order order = _os.CancelOrder(id);
+                return Accepted(order);
+            }
+            catch (Exception e) { return BadRequest(e.Message); }
+        }
+
+        public OrdersController(OrdersService os)
+        {
+            _os = os;
+        }
     }
-  }
 }

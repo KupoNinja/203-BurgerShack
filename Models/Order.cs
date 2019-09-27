@@ -17,7 +17,6 @@ namespace BurgerShack.Models
         public DateTime OrderIn { get; set; }
         public DateTime? OrderOut { get; set; }
         public DateTime? OrderCanceledAt { get; set; }
-
     }
 
 }

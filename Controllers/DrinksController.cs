@@ -49,7 +49,7 @@ namespace BurgerShack.Controllers
             try
             {
                 Drink mydrink = _ds.AddDrink(drinkData);
-                return Ok(mydrink);
+                return Created(mydrink);
             }
             catch (Exception e)
             {
@@ -65,7 +65,7 @@ namespace BurgerShack.Controllers
             {
                 drinkData.Id = id;
                 var drink = _ds.EditDrink(drinkData);
-                return Ok(drink);
+                return Accepted(drink);
             }
             catch (Exception e) { return BadRequest(e.Message); }
         }
@@ -77,7 +77,7 @@ namespace BurgerShack.Controllers
             try
             {
                 var drink = _ds.DeleteDrink(id);
-                return Ok(drink);
+                return Accepted(drink);
             }
             catch (Exception e)
             {

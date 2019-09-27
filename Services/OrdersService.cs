@@ -9,18 +9,18 @@ namespace BurgerShack.Services
 {
     public class OrdersService
     {
-        private readonly FakeDb _fakeRepo;
+        private readonly FakeDb _repo;
         private IDbConnection _repo;
         private readonly BurgersService _bs;
 
         public List<Order> GetOrders()
         {
-            return _fakeRepo.Orders;
+            return _repo.Orders;
         }
 
         internal Order GetOrderById(string id)
         {
-            var order = _fakeRepo.Orders.Find(o => o.Id == id);
+            var order = _repo.Orders.Find(o => o.Id == id);
             if (order == null)
             {
                 throw new Exception("Invalid Order Id");
@@ -30,12 +30,12 @@ namespace BurgerShack.Services
 
         public List<Order> GetOutstandingOrders()
         {
-            return _fakeRepo.Orders.Where(o => o.OrderOut == null && !o.Canceled).ToList();
+            return _repo.Orders.Where(o => o.OrderOut == null && !o.Canceled).ToList();
         }
 
         public List<Order> GetCanceledOrders()
         {
-            return _fakeRepo.Orders.Where(o => o.Canceled).ToList();
+            return _repo.Orders.Where(o => o.Canceled).ToList();
         }
 
         internal Order AddOrder(Order orderData)
@@ -52,12 +52,12 @@ namespace BurgerShack.Services
                         item.Price = burger.Price;
                         break;
                     case "side":
-                        var side = _fakeRepo.Sides.Find(b => b.Id == item.Id);
+                        var side = _repo.Sides.Find(b => b.Id == item.Id);
                         if (side == null) { throw new Exception("Unable to process the order invalid menu option"); }
                         item.Price = side.Price;
                         break;
                     case "drink":
-                        var drink = _fakeRepo.Drinks.Find(b => b.Id == item.Id);
+                        var drink = _repo.Drinks.Find(b => b.Id == item.Id);
                         if (drink == null) { throw new Exception("Unable to process the order invalid menu option"); }
                         item.Price = drink.Price;
                         break;
@@ -66,7 +66,7 @@ namespace BurgerShack.Services
                 }
             });
 
-            _fakeRepo.Orders.Add(orderData);
+            _repo.Orders.Add(orderData);
             return orderData;
         }
 
@@ -99,9 +99,8 @@ namespace BurgerShack.Services
             return order;
         }
 
-        public OrdersService(FakeDb fakeRepo, IDbConnection repo, BurgersService bs)
+        public OrdersService(IDbConnection repo, BurgersService bs)
         {
-            _fakeRepo = fakeRepo;
             _repo = repo;
             _bs = bs;
         }

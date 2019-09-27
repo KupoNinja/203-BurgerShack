@@ -6,7 +6,6 @@ using BurgerShack.Models;
 using BurgerShack.Services;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace BurgerShack.Controllers
 {
     [Route("api/[controller]")]
@@ -66,7 +65,7 @@ namespace BurgerShack.Controllers
             {
                 sideData.Id = id;
                 var side = _ss.EditSide(sideData);
-                return Ok(side);
+                return Accepted(side);
             }
             catch (Exception e) { return BadRequest(e.Message); }
         }
@@ -78,7 +77,7 @@ namespace BurgerShack.Controllers
             try
             {
                 var side = _ss.DeleteSide(id);
-                return Ok(side);
+                return Accepted(side);
             }
             catch (Exception e)
             {
