@@ -37,7 +37,7 @@ namespace BurgerShack
             services.AddSingleton<FakeDb>();
 
             services.AddScoped<IDbConnection>(o => CreateDbConnection());
-            services.AddTransient<BurgersRepository>();
+            services.AddTransient<SidesRepository>();
             services.AddTransient<BurgersService>();
             services.AddTransient<SidesService>();
             services.AddTransient<DrinksService>();

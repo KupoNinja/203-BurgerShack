@@ -10,6 +10,23 @@ namespace BurgerShack.Services
     {
         private BurgersRepository _repo;
 
+        public List<Burger> GetBurgers()
+        {
+            return _repo.GetAll().ToList();
+        }
+
+        /// <summary>
+        /// Returns a burger by its id or throws an exception
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Burger GetBurgerById(string id)
+        {
+            var burger = _repo.GetBurgerById(id);
+            if (burger == null) { throw new Exception("I DONT LIKE BAD ID's"); }
+            return burger;
+        }
+
         /// <summary>
         /// Creates a burger if the name is unique otherwise throws an exception
         /// </summary>
@@ -44,18 +61,6 @@ namespace BurgerShack.Services
             return burger;
         }
 
-        /// <summary>
-        /// Returns a burger by its id or throws an exception
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Burger GetBurgerById(string id)
-        {
-            var burger = _repo.GetBurgerById(id);
-            if (burger == null) { throw new Exception("I DONT LIKE BAD ID's"); }
-            return burger;
-        }
-
         public Burger DeleteBurger(string id)
         {
             var burger = GetBurgerById(id);
@@ -67,11 +72,6 @@ namespace BurgerShack.Services
             }
 
             return burger;
-        }
-
-        public List<Burger> GetBurgers()
-        {
-            return _repo.GetAll().ToList();
         }
 
         public BurgersService(BurgersRepository repo)

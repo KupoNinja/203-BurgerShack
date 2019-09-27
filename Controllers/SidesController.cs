@@ -50,7 +50,7 @@ namespace BurgerShack.Controllers
             try
             {
                 Side myside = _ss.AddSide(sideData);
-                return Ok(myside);
+                return Created("api/sides/" + sideData.Id, sideData);
             }
             catch (Exception e)
             {
