@@ -14,27 +14,14 @@ namespace BurgerShack.Controllers
     {
         private readonly BurgersService _bs;
 
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<Burger>> Get()
-        {
-            try
-            {
-                return Ok(_bs.GetBurgers());
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<Burger> Get(string id)
         {
             try
             {
-                return Ok(_bs.GetBurgerById(id));
+                Burger burger = _bs.GetBurgerById(id);
+                return Ok(burger);
             }
             catch (Exception e)
             {
@@ -49,7 +36,7 @@ namespace BurgerShack.Controllers
             try
             {
                 Burger myBurger = _bs.AddBurger(burgerData);
-                return Ok(myBurger);
+                return Created("api/burgers/" + myBurger.Id, myBurger);
             }
             catch (Exception e)
             {

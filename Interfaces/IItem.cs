@@ -7,5 +7,7 @@ namespace BurgerShack.Interfaces
         string Description { get; set; }
         decimal Price { get; set; }
     }
+
+
 }
 
